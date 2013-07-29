@@ -1,26 +1,34 @@
+#!/usr/bin/env python
+
 """
 Count Words in a String - Counts the number of individual
 words in a string and display the top 5/10 most used words.
 """
 
-from collections import defaultdict
-import operator
+import re
+
+class WordCount:
+    def __init__(self, file):
+        self.infile = file
+
+    '''
+       http://stackoverflow.com/questions/3496518/python-using-a-dictionary-to-count-the-items-in-a-list
+    '''
+    def count_words(self):
+        tokenized = re.split(r'\W+', (open(self.infile).read()).strip())  #Split the text by non-words
+        
+        #result = dict([(i, tokenized.count(i)) for i in set(tokenized)])  #Put the tokes into a dict to count unique
+
+        sresult = sorted((dict([(i, tokenized.count(i)) for i in set(tokenized)])).items(), key=lambda x: -x[1])  #Sort reverse
+
+        print sresult
+
+
+        print "The text contains %d words where %d are unique words" % (len(tokenized), len(sresult) )
+
+    
 
 if __name__ == '__main__':
-    text = raw_input('Enter some text: \n')
-    words = text.split() # very naive approach, split at space
+    wc = WordCount('text')
+    wc.count_words()
 
-    counts = defaultdict(int) # no need to check existence of a key
-
-    # find count of each word
-    for word in words:
-        counts[word] += 1
-
-    # sort the dict by the count of each word, returns a tuple (word, count)
-    sorted_counts = sorted(counts.iteritems(), \
-                           key=operator.itemgetter(1), \
-                           reverse=True)
-
-    # print top 5 words
-    for (word,count) in sorted_counts[:5]: # thanks @jrwren for this!
-            print (word, count)
