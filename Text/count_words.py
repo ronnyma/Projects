@@ -18,7 +18,8 @@ class WordCount:
         tokenized = re.split(r'\W+', (open(self.infile).read()).strip())  #Split the text by non-words
         
 
-        sresult = sorted((dict([(i, tokenized.count(i)) for i in set(tokenized)])).items(), key=lambda x: -x[1])  #Sort reverse
+        sresult = sorted((dict([(i, tokenized.count(i)) 
+            for i in set(tokenized)])).items(), key=lambda x: -x[1])  #Sort reverse
 
 
 
