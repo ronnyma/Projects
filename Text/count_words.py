@@ -8,13 +8,13 @@ words in a string and display the top 5/10 most used words.
 import re
 
 class WordCount:
-    def __init__(self, file):
-        self.infile = file
+    def __init__(self, infile):
+        self.infile = infile
 
     '''
        http://stackoverflow.com/questions/3496518/python-using-a-dictionary-to-count-the-items-in-a-list
     '''
-    def count_words(self):
+    def count_words(self, most_used):
         tokenized = re.split(r'\W+', (open(self.infile).read()).strip())  #Split the text by non-words
         
         #result = dict([(i, tokenized.count(i)) for i in set(tokenized)])  #Put the tokes into a dict to count unique
@@ -26,9 +26,10 @@ class WordCount:
 
         print "The text contains %d words where %d are unique words" % (len(tokenized), len(sresult) )
 
-    
+        print "Top ten words by frequency:"
+        print [el[0] for el in sresult][:most_used]
+
 
 if __name__ == '__main__':
     wc = WordCount('text')
-    wc.count_words()
-
+    wc.count_words(5)
